@@ -1,0 +1,8 @@
+asset:        prt.ico
+title:        PrT (Premiere by Tonynehihi) Windows icon, multi-size ICO
+author:       Tony (tonynehihi), personal build
+source:       derived from prt-icon-1024.png (same directory)
+license:      MIT OR Apache-2.0
+license-file: assets/app-icon/LICENSE.txt
+added:        2026-10-23 by Muse (agent) for Tony
+notes:        Sizes 16-256 px rendered from the approved 1024 px master with Pillow.

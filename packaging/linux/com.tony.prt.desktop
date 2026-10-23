@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Premiere by Tonynehihi
+GenericName=Video Editor
+Comment=Edit video, color and sound
+Exec="filmcraft" %F
+TryExec=filmcraft
+Icon=com.tony.prt
+Terminal=false
+StartupNotify=true
+StartupWMClass=com.tony.prt
+Categories=AudioVideo;Video;AudioVideoEditing;
+Keywords=video;editor;film;timeline;color;grading;nle;

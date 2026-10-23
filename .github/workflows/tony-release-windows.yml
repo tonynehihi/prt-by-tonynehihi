@@ -1,0 +1,106 @@
+# Tony release helper: build the Windows portable zip for a published release
+# and attach it to that release. This replaces hand cross-building the zip on
+# the maintainer's VM (those builds kept dying to OOM / VM restarts); a real
+# Windows runner builds the native .exe instead.
+#
+# Triggers:
+#   - automatically when a release is published;
+#   - manually (Actions -> "Release Windows portable" -> Run workflow) with a
+#     tag, to backfill the zip for an older release.
+#
+# The zip keeps the established portable layout: one top folder "Premiere by Tonynehihi"
+# holding filmcraft.exe + HUONG-DAN.txt. HUONG-DAN.txt is generated below
+# (there is no canonical Windows copy in the tree — packaging/macos/
+# HUONG-DAN.md is the macOS text); it is the stable how-to-run text without
+# the per-release "what's new" notes, which live in the release notes.
+# The binary is unsigned, as with the hand-built zips (SmartScreen note is
+# in HUONG-DAN.txt).
+
+name: Release Windows portable
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to build the Windows zip for (e.g. v1.1.0)"
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - name: Resolve release tag
+        id: tag
+        shell: pwsh
+        run: |
+          "tag=${{ github.event.release.tag_name || inputs.tag }}" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.tag.outputs.tag }}
+
+      - name: Install Rust (stable)
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Build the app (release)
+        run: cargo build --release --locked -p filmcraft
+
+      - name: Assemble the portable folder and zip it
+        id: pkg
+        shell: pwsh
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          $version = $env:TAG -replace '^v', ''
+          $folder = "Premiere by Tonynehihi"
+          $stage = Join-Path $env:GITHUB_WORKSPACE "dist/windows/$folder"
+          New-Item -ItemType Directory -Force $stage | Out-Null
+          Copy-Item "target/release/filmcraft.exe" $stage
+          $guide = @'
+          Premiere by Tonynehihi __VERSION__ — bản Windows portable (không cần cài đặt)
+          ===================================================================
+
+          Bản build cá nhân của Tony, dựa trên DeckCraft của storytold (MIT/Apache-2.0).
+
+          CÁCH CHẠY
+          ---------
+          1. Giải nén cả thư mục "Premiere by Tonynehihi" ra chỗ nào cũng được (Desktop, Documents...).
+          2. Mở thư mục, chạy file filmcraft.exe.
+          3. Không cần cài đặt gì thêm. Xóa thư mục là gỡ xong.
+
+          WINDOWS CHẶN LẦN ĐẦU (SmartScreen)
+          -----------------------------------
+          Vì bản này không có chữ ký số của Microsoft, Windows có thể hiện màn hình
+          xanh "Windows protected your PC" khi chạy lần đầu:
+          - Bấm "More info" → bấm "Run anyway".
+          Chỉ cần làm 1 lần.
+
+          LƯU TRỮ DỮ LIỆU
+          ----------------
+          Settings và dữ liệu của app nằm ở %APPDATA%\DeckCraft (giữ nguyên tên như
+          bản gốc), không nằm trong thư mục này — di chuyển thư mục app thoải mái.
+
+          CẬP NHẬT BẢN MỚI
+          ----------------
+          Trên Windows, app báo có bản mới trong About (menu Help → About Premiere by Tonynehihi,
+          phần Updates) nhưng chưa tự cài được như bản macOS. Khi có bản mới:
+          tải file prt-by-tonynehihi-__VERSION__-windows.zip mới nhất ở trang Releases
+          của repo tonynehihi/prt-by-tonynehihi, giải nén đè thư mục cũ là xong
+          (settings không bị ảnh hưởng).
+          '@
+          $guide = $guide -replace '__VERSION__', $version
+          Set-Content -Path (Join-Path $stage "HUONG-DAN.txt") -Value $guide -Encoding utf8BOM
+          $asset = "prt-by-tonynehihi-$version-windows.zip"
+          Compress-Archive -Path "dist/windows/$folder" -DestinationPath "dist/windows/$asset"
+          "asset=dist/windows/$asset" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+
+      - name: Attach the Windows zip to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "${{ steps.tag.outputs.tag }}" "${{ steps.pkg.outputs.asset }}" --clobber

@@ -1,0 +1,8 @@
+asset:        com.tony.prt.png
+title:        PrT (Premiere by Tonynehihi) Linux hicolor theme icon, 256 px
+author:       Tony (tonynehihi), personal build
+source:       derived from prt-icon-1024.png (assets/app-icon)
+license:      MIT OR Apache-2.0
+license-file: assets/app-icon/LICENSE.txt
+added:        2026-10-23 by Muse (agent) for Tony
+notes:        Rendered from the approved 1024 px master with Pillow.

@@ -1,0 +1,152 @@
+# Premiere by Tonynehihinehihi — Hướng dẫn cài đặt sạch & sử dụng
+
+Bản build cá nhân của Tony, dựa trên LightCraft (MIT/Apache-2.0), đã thêm:
+- Export **JPEG Ultra HDR** (có thanh HDR boost 0–4) để đăng Instagram lên HDR — **bản này viết lại gain map theo đúng chuẩn Lightroom** (3 kênh, full-res)
+- **Bấm vào số** bên phải slider để gõ số trực tiếp (Enter = chốt, Esc = hủy)
+- Giao diện **sáng/tối**: vào Settings (⌘,) → Interface → Theme
+- Icon **LrT** phong cách Adobe, tên app ngoài Spotlight là **"LrT"** (đồng bộ mã với cả bộ app: PsT, AiT, PrT...), trong app là **"Premiere by Tonynehihinehihi"**
+
+## Mới ở bản 1.2.0 — đổi tên thành "LrT" + changelog hiện đúng chữ đậm
+
+- **Tên app rút gọn còn "LrT"**: ngoài Spotlight / Finder / Dock app chỉ tên là **LrT** — đồng bộ với cả bộ app của Tony (PsT, AiT, PrT, AeT, IdT, AcT); icon vẫn giữ nguyên hình **LrT**. Mở app lên thì bên trong (About, menu...) vẫn là tên đầy đủ **Premiere by Tonynehihinehihi**. Repo GitHub cũng đổi thành `tonynehihi/lr-by-tonynehihi` — các bản cũ vẫn kiểm tra update được nhờ GitHub tự chuyển hướng.
+- **Changelog trong app hiện đúng định dạng**: chữ đậm trong What's new giờ hiển thị đậm thật như trên GitHub, hết lỗi lòi dấu `**`.
+- **Thư viện và cài đặt giữ nguyên 100%**: bundle id không đổi, thư mục thư viện vẫn là `Premiere by Tonynehihi Library` như cũ — cài bản này xong mở lên là thấy đúng thư viện cũ.
+- ⚠️ **Bản này phải cài TAY một lần**: updater của bản cũ tìm app theo tên cũ nên tự cập nhật sẽ dừng ở bước build (app cũ vẫn nguyên vẹn, không mất gì). Cách cài: tải zip bản 1.2.0 → build như mọi lần (xem mục cài sạch bên dưới) → xóa app cũ **Premiere by Tonynehihi.app** trong /Applications → kéo **PrT.app** vào. Từ bản sau (1.2.1...) update tự động trong app bình thường với tên mới.
+
+## Mới ở bản 1.1.9 — nút Copy tự xám + locate theo folder
+
+- **Nút Copy Settings tự xám khi không copy được**: chọn nhiều ảnh có settings khác nhau → nút chuyển xám, không bấm được, rê chuột lên nút có dòng giải thích lý do. Khỏi cảnh bấm vào rồi mới hiện lỗi. Chọn các ảnh có settings giống nhau, hoặc chọn đúng 1 ảnh, là nút sáng lại.
+- **Locate tách thành 2 chức năng** trong pop-up ảnh mất file:
+  - **Locate File...**: chọn đúng file như cũ (app vẫn kiểm chứng bằng nội dung ảnh, file trùng tên nhưng khác ảnh bị từ chối).
+  - **Locate in Folder...** (mới): chỉ cần chọn **folder** — app tự quét toàn bộ folder (kể cả folder con), tự tìm đúng ảnh bằng nội dung, **file có bị đổi tên vẫn tìm ra**, tìm thấy là tự link lại luôn. Nếu có nhiều file trông giống nhau mà không phân biệt được, app sẽ báo để bạn tự chọn bằng Locate File.
+
+## Mới ở bản 1.1.8 — update hiện tiến trình ngay trong app
+
+- Bấm **Install Update**: app **không thoát nữa** — nó tự build bản mới ngay trong app và hiện tiến trình trực tiếp: đang ở bước nào (giải nén / build / đóng gói), đã compile bao nhiêu crate, đã chạy bao lâu. Có nút **Cancel Build** để hủy giữa chừng.
+- Build xong app báo bản mới đã sẵn sàng → bấm **Finish Install**: app mới thoát, và chỉ thoát **vài giây** để tráo bản mới vào /Applications rồi tự mở lại. Lúc tráo, bản cũ được dời vào thư mục backup (`~/Library/Caches/Premiere by Tonynehihinehihi/updates/backup`) trước, nên **không mở được bản cũ bằng Spotlight giữa chừng** nữa; tráo lỗi thì bản cũ được khôi phục và mở lại.
+- Build lỗi giữa chừng: bản đang dùng **không bị đụng vào**, app báo lỗi kèm đường dẫn build log để xem.
+- Lưu ý: bản 1.1.8 này cài vào vẫn theo flow cũ (thoát rồi chạy ngầm), vì flow mới nằm trong chính bản 1.1.8 — từ lần update **sau** mới thấy tiến trình.
+
+## Mới ở bản 1.1.7 — dọn menu Help, bỏ hết link về LightCraft gốc
+
+- Menu **Help** giờ chỉ còn 4 mục: **About Premiere by Tonynehihinehihi**, **Check for Updates**, **System Info**, **Keyboard Shortcuts**.
+- Đã xóa toàn bộ mục dẫn về dự án gốc: mục Help (tài liệu của bản gốc), Join the ArtCraft Discord, Send Feedback, Premiere by Tonynehihinehihi Website, Premiere by Tonynehihinehihi on GitHub (mục này trỏ về repo gốc storytold/lightcraft chứ không phải repo của Tony), ArtCraft Website, và **What's New** (nội dung là changelog của bản gốc). Changelog của bản này vẫn nằm ở pop-up update và trang GitHub Releases của Tony như cũ.
+
+## Mới ở bản 1.1.6 — HEIC, pop-up file mất, hỏi update khi mở app
+
+- **Icon chuẩn macOS**: icon LrT bo góc squircle + đệm trong suốt đúng lưới icon macOS, hết vuông full viền trên Dock.
+- **Đọc được file HEIC** (bản macOS): ảnh .heic từ iPhone import, xem và chỉnh như ảnh thường (app mượn bộ giải mã HEIC có sẵn trong macOS; bản Windows chưa đọc được HEIC).
+- **Ảnh mất file gốc**: mở ảnh để chỉnh mà file gốc đã bị di chuyển/xóa ở ngoài app → hiện pop-up: **Locate File...** (chọn lại vị trí mới — app kiểm chứng đúng ảnh bằng nội dung, file trùng tên nhưng khác ảnh bị từ chối), **Remove from Library** (gỡ hẳn khỏi thư viện), **Not Now** (để sau).
+- **Copy Settings**: chọn nhiều ảnh có settings khác nhau thì không copy được nữa, tránh nhầm lẫn đang copy settings của ảnh nào. Chọn 1 ảnh, hoặc các ảnh settings giống nhau, copy bình thường.
+- **Mở app hỏi update**: có bản mới mới hiện pop-up, kèm **What's new** (changelog) để đọc trước; không có bản mới thì không hiện gì. Bấm **Later** thì lần mở sau hỏi lại. Cài bản này bằng chính nút update trong app 1.1.5: **Help → Check for Updates**.
+
+## Mới ở bản 1.1.5 — tự kiểm tra & cài bản mới (Check for Updates)
+
+- Vào **Help → Check for Updates** (hoặc mở **About Premiere by Tonynehihinehihi**, mục **Updates** ở dưới cùng): app tự hỏi GitHub xem có bản mới hơn không.
+- Có bản mới: bấm **Download Update** để tải về, rồi **Quit & Install** — app tự thoát, build bản mới (vài phút, chạy ngầm), thay app trong Applications rồi tự mở lại. **Đây là lần cuối phải cài tay**: từ bản sau (1.1.6...) cứ bấm nút trong app là xong.
+- Nếu cài đặt dở dang có trục trặc: xem log ở `~/Library/Logs/LightroomByTonynehihi-update.log`. Build lỗi thì app cũ vẫn nguyên vẹn và tự mở lại, không mất gì.
+- Bản Windows: kiểm tra bản mới trong About được, nhưng chưa tự cài — tải bản mới ở trang release (nút **Open Release Page** trong app).
+
+## Mới ở bản 1.1.4 — chọn nhiều ảnh + Copy/Paste tách nút
+
+- Thanh dưới có **2 nút riêng**: **Copy Settings** và **Paste Settings** (trước đây gộp 1 nút, copy xong là mất nút copy). Copy lúc nào cũng được, không cần paste trước.
+- **Chọn nhiều ảnh trong filmstrip**: bấm **vòng tròn tick** ở góc trên-phải mỗi ảnh thu nhỏ để chọn/bỏ chọn (ảnh đã chọn có dấu ✓ xanh). Hoặc: **⌘+click** = chọn thêm/bỏ chọn, **Shift+click** = chọn cả loạt từ ảnh đang chọn tới ảnh vừa bấm.
+- Nút **All / None** ở thanh dưới: chọn tất cả ảnh đang hiển thị / bỏ chọn hết.
+- **Paste Settings** sẽ dán vào **toàn bộ ảnh đã chọn** (không chỉ ảnh đang mở). Export (File → Export) cũng xuất đúng những ảnh đã chọn.
+
+## Gỡ bản cũ / cài lại sạch
+
+**Nếu mày đã build bản trước:**
+```bash
+# Xóa bản build cũ
+rm -rf target/
+# Xóa app đã cài (nếu đã kéo vào Applications)
+rm -rf "/Applications/PrT.app"
+rm -rf "/Applications/Premiere by Tonynehihi.app"
+rm -rf "/Applications/LightCraft.app"
+```
+
+**Xóa sạch thư viện/cache (nếu muốn làm lại từ đầu):**
+```bash
+# Thư viện ảnh (CẨN THẬN: xóa là mất catalog, sao lưu trước!)
+rm -rf ~/Pictures/LightCraft\ Library
+# Cache & settings
+rm -rf ~/Library/Application\ Support/lightcraft
+rm -rf ~/.config/lightcraft
+```
+
+## Cài đặt (làm 1 lần)
+
+**Bước 1** — Cài Xcode Command Line Tools (nếu chưa có):
+```
+xcode-select --install
+```
+
+**Bước 2** — Cài Rust (nếu chưa có):
+```
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+```
+Xong thì **đóng Terminal, mở lại**.
+
+## Build & chạy
+
+**Bước 3** — Giải nén `lr-by-tonynehihi.zip`.
+
+**Bước 4** — Trong Terminal:
+```bash
+cd <kéo folder lr-by-tonynehihi vào Terminal rồi thả>
+cargo build --release -p lightcraft
+```
+(Lần đầu 10–20 phút.)
+
+**Bước 5** — Chạy thử:
+```bash
+./target/release/lightcraft
+```
+
+**Bước 6** — Đóng gói thành app (không cần Terminal nữa):
+```bash
+packaging/macos/package.sh --arch aarch64
+```
+(Máy Intel cũ: `--arch x86_64`.)
+Xong mở file `.dmg` trong `dist/release/`, kéo **PrT.app** vào Applications.
+
+## Dùng HDR cho Instagram
+
+1. Chỉnh ảnh như bình thường.
+2. File → Export → Format: **JPEG Ultra HDR**.
+3. Kéo **HDR boost** (thử 1.5 trước).
+4. Export → đăng Instagram.
+
+## Zoom ảnh bằng trackpad
+
+Dùng **2 ngón tay pinch** trên trackpad để zoom to/nhỏ ảnh (như Photos).
+Kéo 1 ngón để di chuyển ảnh khi đã zoom.
+
+## Đổi giao diện sáng/tối
+
+Nhấn `⌘,` (Settings) → tab **Interface** → mục **Theme** → chọn Dark hoặc Light.
+
+## App không mở được (macOS chặn app tự đóng gói)
+
+App tự đóng gói không có chữ ký Apple nên macOS hay chặn — không phải app hỏng.
+
+**Trường hợp 1** — macOS báo app "from an unidentified developer":
+Chuột phải vào app → chọn **Open** → bấm **Open** trong hộp thoại hiện ra.
+
+**Trường hợp 2** — macOS báo app "is damaged" hoặc "can't be opened":
+1. Mở Terminal.
+2. Gõ đúng dòng này rồi Enter:
+```bash
+xattr -cr "/Applications/PrT.app"
+```
+3. Mở app lại bình thường.
+
+**Trường hợp 3** — app crash / tắt ngay khi mở:
+Kiểm tra lại **Bước 6** đã đúng chip máy chưa — máy Apple Silicon (M1/M2/M3/M4) phải dùng `--arch aarch64`, máy Intel cũ dùng `--arch x86_64`. Đóng gói sai chip là crash luôn, phải đóng gói lại.
+
+## Build báo lỗi
+
+- Thiếu `xcode-select`: chạy `xcode-select --install` rồi build lại.
+- Terminal không nhận lệnh `cargo`: đóng Terminal, mở lại (Rust mới thêm vào PATH sau khi cài).
+- Lỗi khác: chụp màn hình lỗi gửi tao.
